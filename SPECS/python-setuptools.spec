@@ -1,3 +1,7 @@
+%if 0%{?copr_username:1}
+%global scl %{copr_username}-%{copr_projectname}
+%endif
+
 %{?scl:%scl_package python-setuptools}
 %{!?scl:%global pkg_name %{name}}
 
@@ -5,7 +9,7 @@
 
 Name:           %{?scl_prefix}python-setuptools
 Version:        0.9.8
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Easily build and distribute Python packages
 
 Group:          Applications/System
@@ -25,6 +29,7 @@ BuildRoot:      %{_tmppath}/%{pkg_name}-%{version}-%{release}-root-%(%{__id_u} -
 
 BuildArch:      noarch
 BuildRequires:  %{?scl_prefix}python-devel
+%{?scl:BuildRequires: %{scl}-build %{scl}-runtime}
 
 # Legacy: We removed this subpackage once easy_install no longer depended on
 # python-devel
@@ -92,6 +97,9 @@ rm -rf %{buildroot}
 %{_bindir}/easy_install-3.*
 
 %changelog
+* Sun Aug 17 2014 Dmitrijs Milajevs <dimazest@gmail.com> - 0.9.8-4
+- Copr support.
+
 * Fri Nov 25 2013 Robert Kuska <rkuska@redhat.com> - 0.9.8-3
 - Increase release number by 2 to avoid conflict with rhel-7.0 build
 
@@ -99,7 +107,7 @@ rm -rf %{buildroot}
 - Update to 0.9.8
 
 * Tue Aug 20 2013 Robert Kuska <rkuska@redhat.com> - 0.6.28-7
-- Add SSL to easy_install resolves CVE-2013-1633 and CVE-2013-2099 
+- Add SSL to easy_install resolves CVE-2013-1633 and CVE-2013-2099
 - For more info related to these CVEs visit rhbz#994182
 Resolves: rhbz#996706
 
@@ -198,7 +206,7 @@ Resolves: rhbz#996706
 
 * Thu Feb 04 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.10-3
 - First build with python3 support enabled.
-  
+
 * Thu Jan 29 2010 Toshio Kuratomi <toshio@fedoraproject.org> - 0.6.10-2
 - Really disable the python3 portion
 
