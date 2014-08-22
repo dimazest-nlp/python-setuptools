@@ -1,5 +1,5 @@
 %if 0%{?copr_username:1}
-%global scl %{copr_username}-%{copr_projectname}
+%global scl %{copr_username}_%{copr_projectname}
 %endif
 
 %{?scl:%scl_package python-setuptools}
